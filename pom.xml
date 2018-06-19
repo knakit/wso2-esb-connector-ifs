@@ -24,7 +24,7 @@
     <artifactId>org.wso2.carbon.esb.connector.knakit.ifs</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>WSO2 Carbon - Connector For knakitifs</name>
+    <name>WSO2 - IFS Connector by Knak.it</name>
     <url>http://wso2.org</url>
 
     <properties>
@@ -47,6 +47,21 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>ifs.fnd</groupId>
+            <artifactId>ifs-java-fnd-ap</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ifs.fnd</groupId>
+            <artifactId>ifs-java-fnd-base</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ifs.fnd</groupId>
+            <artifactId>ifs-java-fnd-common</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.synapse</groupId>
             <artifactId>synapse-core</artifactId>
