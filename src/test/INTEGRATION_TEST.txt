@@ -1,0 +1,1 @@
+﻿Product: Integration tests for WSO2 ESB knakitifs connector
