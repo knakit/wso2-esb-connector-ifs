@@ -46,8 +46,9 @@ public class selectStatement extends AbstractConnector {
                 resultPayloadCreate.preparePayload(messageContext, resultOM);
 
             }
-        } catch (Exception e) {
-            System.out.print(e.toString());
+        } catch (APException e) {
+            log.error("error while connecting to IFS URL " + IfsConnURL + e.getMessage());
+            handleException(e.getMessage(), e, messageContext);
         }
 
     }

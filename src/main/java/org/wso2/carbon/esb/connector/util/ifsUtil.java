@@ -6,6 +6,9 @@ import ifs.fnd.ap.RecordCollection;
 import ifs.fnd.ap.RecordAttributeCollection;
 import ifs.fnd.ap.DataType;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
+
 public class ifsUtil {
     public static OMElement generateResultXML(RecordCollection result)
     {
@@ -34,18 +37,20 @@ public class ifsUtil {
                     System.out.print(data_type.toString() + " ");
 
                     //value
-                    String value = "-";
-                    if (data_type == DataType.TEXT) {
-                        value = rec.get(j).getValue().toString();
-                    }
-                    System.out.println(value);
-                    //log.info(attribute_name + " " + data_type + " " + value);
-
-
+                    String value;
                     //define element for one attribute
-                    OMElement attributeXML = constants.factory.createOMElement(attribute_name,constants.omNs);
-                    constants.factory.createOMText(attributeXML, value);
+                    OMElement attributeXML = constants.factory.createOMElement(attribute_name, constants.omNs);
 
+                    if (rec.get(j).getValue().toString() != null) {
+
+                        value = StringEscapeUtils.escapeXml(rec.get(j).getValue().toString());
+
+
+                        constants.factory.createOMText(attributeXML, value);
+                    }
+                    //else{
+                    //    constants.factory.createOMText(attributeXML);
+                    //}
                     resultXML.addChild(attributeXML);
 
                     //log.info(resultXML.size());
