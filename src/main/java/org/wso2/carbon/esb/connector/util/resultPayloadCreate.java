@@ -14,10 +14,11 @@ public class resultPayloadCreate {
             OMElement child = (OMElement)itr.next();
             child.detach();
         }
-        for (Iterator itr = element.getChildElements(); itr.hasNext();)
-        {
-            OMElement child = (OMElement)itr.next();
-            soapBody.addChild(child);
-        }
+        soapBody.addChild(element);
+        //for (Iterator itr = element.getChildElements(); itr.hasNext();)
+        //{
+        //    OMElement child = (OMElement)itr.next();
+        //   soapBody.addChild(child);
+        //}
     }
 }

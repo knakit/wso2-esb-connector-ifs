@@ -6,10 +6,13 @@ import org.wso2.carbon.connector.core.AbstractConnector;
 import org.wso2.carbon.connector.core.ConnectException;
 import org.wso2.carbon.connector.core.util.ConnectorUtils;
 
+import org.wso2.carbon.esb.connector.util.constants;
 import org.wso2.carbon.esb.connector.util.ifsUtil;
+import org.wso2.carbon.esb.connector.util.xmlUtil;
 import org.wso2.carbon.esb.connector.util.resultPayloadCreate;
 
 import ifs.fnd.ap.*;
+
 
 public class selectStatement extends AbstractConnector {
 
@@ -18,20 +21,16 @@ public class selectStatement extends AbstractConnector {
 
         //IFS connection details
 
-        String IfsConnURL = (String)ConnectorUtils.lookupTemplateParamater(messageContext, "IfsConnURL");
-        String IfsVersion = (String)ConnectorUtils.lookupTemplateParamater(messageContext, "IfsVersion");
-        String IfsUserID = (String)ConnectorUtils.lookupTemplateParamater(messageContext, "IfsUserID");
-        String IfsPassword = (String)ConnectorUtils.lookupTemplateParamater(messageContext, "IfsPassword");
+        String IfsConnURL = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSCONNURL);
+        String IfsVersion = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSVERSION);
+        String IfsUserID = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSUSERID);
+        String IfsPassword = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSPASSWORD);
 
-        String SqlStatement = (String)ConnectorUtils.lookupTemplateParamater(messageContext, "SqlStatement");
+        String SqlStatement = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.SQLSTATEMENT);
 
         try {
 
-            // Create a server and invoke server
-            Server srv = new Server();
-
-            srv.setConnectionString(IfsConnURL);
-            srv.setCredentials(IfsUserID, IfsPassword);
+            Server srv = ifsUtil.connect(IfsConnURL, IfsVersion, IfsUserID, IfsPassword);
 
             //setup PLSQL command to execute
             PlsqlSelectCommand cmd = new PlsqlSelectCommand(srv, SqlStatement);
@@ -39,17 +38,15 @@ public class selectStatement extends AbstractConnector {
             //start invoke
             RecordCollection result = cmd.executeQuery();
 
-
             if(result!=null){
-                OMElement resultOM = ifsUtil.generateResultXML(result);
-
+                OMElement resultOM = xmlUtil.generateResultXML(result);
                 resultPayloadCreate.preparePayload(messageContext, resultOM);
-
             }
         } catch (APException e) {
-            log.error("error while connecting to IFS URL " + IfsConnURL + e.getMessage());
+            log.error("error while executing select statement in " + IfsConnURL + " Error:" + e.getMessage());
             handleException(e.getMessage(), e, messageContext);
         }
+
 
     }
 

@@ -17,10 +17,9 @@
    under the License.
 -->
 <connector>
-    <component name="knakitifs" package="org.wso2.carbon.connector" >
-        <dependency component="config" />
-        <dependency component="sample" />
-        <description>WSO2 knakitifs connector library</description>
+    <component name="knakitifs" package="org.wso2.carbon.esb.connector" >
+        <dependency component="knakit" />
+        <description>WSO2 IFS connector library by KnakIt</description>
     </component>
     <icon>icon/icon-small.gif</icon>
 </connector>

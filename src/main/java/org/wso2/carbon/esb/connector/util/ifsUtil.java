@@ -1,65 +1,80 @@
 package org.wso2.carbon.esb.connector.util;
 
+import ifs.fnd.ap.Server;
+
 import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.OMNode;
+import org.apache.axiom.soap.SOAPBody;
+import org.apache.synapse.MessageContext;
 
-import ifs.fnd.ap.RecordCollection;
-import ifs.fnd.ap.RecordAttributeCollection;
-import ifs.fnd.ap.DataType;
-
-import org.apache.commons.lang3.StringEscapeUtils;
+import javax.xml.namespace.QName;
+import java.util.Iterator;
+import java.util.HashMap;
 
 
 public class ifsUtil {
-    public static OMElement generateResultXML(RecordCollection result)
-    {
 
-        //define root element of XML
-        OMElement resultsXML = constants.factory.createOMElement("response",constants.omNs);
+    public static Server connect(String IfsConnURL, String IfsVersion, String IfsUserID, String IfsPassword){
+        // Create a server and invoke server
+        Server srv = new Server();
 
+        srv.setConnectionString(IfsConnURL);
+        srv.setCredentials(IfsUserID, IfsPassword);
 
-        if(result!=null){
+        return srv;
 
-            for(int i = 0; i < result.size(); i++){
-                RecordAttributeCollection rec;
-                rec = result.get(i).getAttributes();
-
-                //define element for one result set
-                OMElement resultXML = constants.factory.createOMElement("record",constants.omNs);
-
-                for(int j = 0; j <rec.size(); j++)
-                {
-                    //attribure name
-                    String attribute_name = rec.get(j).getNameOf();
-                    System.out.print(attribute_name + " ");
-
-                    //type
-                    DataType data_type = rec.get(j).getDataType();
-                    System.out.print(data_type.toString() + " ");
-
-                    //value
-                    String value;
-                    //define element for one attribute
-                    OMElement attributeXML = constants.factory.createOMElement(attribute_name, constants.omNs);
-
-                    if (rec.get(j).getValue().toString() != null) {
-
-                        value = StringEscapeUtils.escapeXml(rec.get(j).getValue().toString());
-
-
-                        constants.factory.createOMText(attributeXML, value);
-                    }
-                    //else{
-                    //    constants.factory.createOMText(attributeXML);
-                    //}
-                    resultXML.addChild(attributeXML);
-
-                    //log.info(resultXML.size());
-                }
-                resultsXML.addChild(resultXML);
-            }
-        }
-        return resultsXML;
-
+        //setup PLSQL command to execute
     }
 
+    public static String getPlsqlBlock(MessageContext messageContext){
+
+        SOAPBody soapBody = messageContext.getEnvelope().getBody();
+        String plsqlBlock = "";
+
+        for (Iterator itr = soapBody.getChildElements(); itr.hasNext();)
+        {
+            OMElement child = (OMElement)itr.next();
+            if (child.getLocalName() == constants.REQUEST) // <request> element
+            {
+                for (Iterator ItrRequest = child.getChildElements(); ItrRequest.hasNext();)
+                {
+                    OMElement child_lv1 = (OMElement)ItrRequest.next();
+                    if (child_lv1.getLocalName() == constants.PLSQLBLOCK) { // <plsqlBlock> element
+                        plsqlBlock = child_lv1.getText();
+                        System.out.println("------------------------PLSQL---------------------------------");
+                        System.out.println(plsqlBlock);
+                    }
+                }
+            }
+        }
+        return plsqlBlock;
+    }
+
+    public static HashMap getBindVariables(MessageContext messageContext){
+        SOAPBody soapBody = messageContext.getEnvelope().getBody();
+        //OMElement bindVariables = soapBody.getFirstChildWithName(new QName(constants.omNs.getNamespaceURI(), constants.BINDVARIABLES));
+
+        HashMap<String, String> bindsMap = new HashMap<>();
+
+        for (Iterator itr = soapBody.getChildElements(); itr.hasNext();)
+        {
+            OMElement child = (OMElement)itr.next();
+            if (child.getLocalName() == constants.REQUEST) // <request> element
+            {
+                for (Iterator ItrRequest = child.getChildElements(); ItrRequest.hasNext();)
+                {
+                    OMElement child_lv1 = (OMElement)ItrRequest.next();
+                    if (child_lv1.getLocalName() == constants.BINDVARIABLES) { // <bindVariables> element
+                        System.out.println("++++++++++++++++++++");
+                        for (Iterator bindsItr = child_lv1.getChildElements(); bindsItr.hasNext(); ) {
+                            OMElement bind = (OMElement) bindsItr.next();
+                            bindsMap.put(bind.getLocalName(), bind.getText());
+                            System.out.println(bind.getLocalName() + " - " + bind.getText());
+                        }
+                    }
+                }
+            }
+        }
+        return bindsMap;
+    }
 }
