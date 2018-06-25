@@ -31,6 +31,9 @@ public class knakitifsConnector extends AbstractConnector {
         Object templateParam = getParameter(messageContext, "generated_param");
         try {
             log.info("knakitifs sample connector received message :" + templateParam);
+            log.info("knakitifs sample connector received message :" + templateParam);
+            log.info("knakitifs sample connector received message :" + templateParam);
+
             /**Add your connector code here 
             **/
         } catch (Exception e) {
