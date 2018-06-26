@@ -16,8 +16,9 @@ import java.util.Set;
 
 public class xmlUtil {
 
-    public static OMElement generateResultXML(RecordCollection result)
-    {
+
+
+    public static OMElement generateResultXML(RecordCollection result)    {
 
         //define root element of XML
         OMElement resultsXML = constants.factory.createOMElement(constants.RESULTSET,constants.omNs);
@@ -35,7 +36,7 @@ public class xmlUtil {
                 for(int j = 0; j <rec.size(); j++)
                 {
                     //attribure name
-                    String attribute_name = rec.get(j).getNameOf();
+                    String attribute_name = rec.get(j).getNameOf().replace("$", "__");
                     //System.out.print(attribute_name + " ");
 
                     //type
@@ -65,9 +66,7 @@ public class xmlUtil {
         return resultsXML;
 
     }
-
-    public static OMElement generateResultXML(HashMap result)
-    {
+    public static OMElement generateResultXML(HashMap result)    {
         //define root element of XML
         OMElement resultsXML = constants.factory.createOMElement(constants.RESPONSE,constants.omNs);
         OMElement bindVariablesXML = constants.factory.createOMElement(constants.BINDVARIABLES,constants.omNs);
@@ -96,5 +95,56 @@ public class xmlUtil {
 
         resultsXML.addChild(resultXML);
         return resultsXML;
+    }
+
+    public static String getElementFromXmlRequest(MessageContext messageContext, String ELEMENT) {
+        SOAPBody soapBody = messageContext.getEnvelope().getBody();
+        String elementValue = constants.NULL;
+
+        for (Iterator itr = soapBody.getChildElements(); itr.hasNext();)
+        {
+            OMElement child = (OMElement)itr.next();
+            if (child.getLocalName() == constants.REQUEST) // <request> element
+            {
+                for (Iterator ItrRequest = child.getChildElements(); ItrRequest.hasNext();)
+                {
+                    OMElement child_lv1 = (OMElement)ItrRequest.next();
+                    if (child_lv1.getLocalName() == ELEMENT) { // get the element
+                        elementValue = child_lv1.getText();
+                        System.out.println("------------------------" + ELEMENT + "---------------------------------");
+                        System.out.println(elementValue);
+                    }
+                }
+            }
+        }
+        return elementValue;
+    }
+
+    public static HashMap getElementCollectionFromXmlRequest(MessageContext messageContext, String ELEMENT){
+        SOAPBody soapBody = messageContext.getEnvelope().getBody();
+        //OMElement bindVariables = soapBody.getFirstChildWithName(new QName(constants.omNs.getNamespaceURI(), constants.BINDVARIABLES));
+
+        HashMap<String, String> bindsMap = new HashMap<>();
+
+        for (Iterator itr = soapBody.getChildElements(); itr.hasNext();)
+        {
+            OMElement child = (OMElement)itr.next();
+            if (child.getLocalName() == constants.REQUEST) // <request> element
+            {
+                for (Iterator ItrRequest = child.getChildElements(); ItrRequest.hasNext();)
+                {
+                    OMElement child_lv1 = (OMElement)ItrRequest.next();
+                    if (child_lv1.getLocalName() == ELEMENT) { //  element
+                        System.out.println("----------------------" + ELEMENT + "--------------------------");
+                        for (Iterator bindsItr = child_lv1.getChildElements(); bindsItr.hasNext(); ) {
+                            OMElement bind = (OMElement) bindsItr.next();
+                            bindsMap.put(bind.getLocalName(), bind.getText());
+                            System.out.println(bind.getLocalName() + " - " + bind.getText());
+                        }
+                    }
+                }
+            }
+        }
+        return bindsMap;
     }
 }

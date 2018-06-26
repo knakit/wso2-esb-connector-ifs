@@ -11,12 +11,7 @@ import org.wso2.carbon.esb.connector.util.ifsUtil;
 import org.wso2.carbon.esb.connector.util.resultPayloadCreate;
 import org.wso2.carbon.esb.connector.util.xmlUtil;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Map;
-
-public class plsqlBlock extends AbstractConnector {
+public class plsqlBaseMethod extends AbstractConnector {
 
     @Override
     public void connect(MessageContext messageContext) throws ConnectException {
@@ -27,38 +22,28 @@ public class plsqlBlock extends AbstractConnector {
         String IfsUserID = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSUSERID);
         String IfsPassword = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSPASSWORD);
 
-        String plsqlBlock = xmlUtil.getElementFromXmlRequest(messageContext, constants.PLSQLBLOCK);
+        String plsqlPackage = xmlUtil.getElementFromXmlRequest(messageContext, constants.PLSQLPACKAGE);
+        PlsqlBaseMethodType methodType = ifsUtil.getPlsqlBaseMethodType(messageContext);
+        String methodName = xmlUtil.getElementFromXmlRequest(messageContext,constants.METHODNAME);
+
+        if (methodName == constants.NULL) methodName = methodType.getDefaultMethodName();
+
+        PlsqlBaseMethodAction methodAction = ifsUtil.getPlsqlBaseMethodAction(messageContext);
+        Record recordAttr = ifsUtil.getRecordAttr(messageContext);
 
         try {
             Server srv = ifsUtil.connect(IfsConnURL, IfsVersion, IfsUserID, IfsPassword);
-            PlsqlCommand cmd = new PlsqlCommand(srv, plsqlBlock);
-
-            //add bind variables
-            HashMap bindVariables = ifsUtil.getBindVariables(messageContext);
-            Set set = bindVariables.entrySet();
-            Iterator request_itr = set.iterator();
-
-            while(request_itr.hasNext()) {
-                Map.Entry bind = (Map.Entry)request_itr.next();
-                cmd.getBindVariables().add((String)bind.getKey(), (String)bind.getValue()).setBindVariableDirection(BindVariableDirection.IN_OUT);
-            }
-
-            //start invoke
+            PlsqlBaseMethodCommand cmd = new PlsqlBaseMethodCommand(srv, methodType, plsqlPackage, methodName, recordAttr, methodAction);
             cmd.execute();
 
-            //pack outputs of bind variables
-            Iterator response_itr = set.iterator();
-            while(response_itr.hasNext()) {
-                Map.Entry bind = (Map.Entry)response_itr.next();
-                bindVariables.put(bind.getKey(), cmd.getBindVariables().findValue((String) bind.getKey()));
-            }
+            RecordCollection recCollection = new RecordCollection();
+            recCollection.add(recordAttr);
 
-
-            OMElement resultOM = xmlUtil.generateResultXML(bindVariables);
+            OMElement resultOM = xmlUtil.generateResultXML(recCollection);
             resultPayloadCreate.preparePayload(messageContext, resultOM);
 
         } catch (APException e) {
-            log.error("error while executing PL/SQL block in " + IfsConnURL + " Error:" + e.getMessage());
+            log.error("error while executing PL/SQL Base Method in " + IfsConnURL + " Error:" + e.getMessage());
             handleException(e.getMessage(), e, messageContext);
         }
 

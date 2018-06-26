@@ -1,15 +1,16 @@
 package org.wso2.carbon.esb.connector.util;
 
-import ifs.fnd.ap.Server;
+import ifs.fnd.ap.*;
 
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.OMNode;
 import org.apache.axiom.soap.SOAPBody;
 import org.apache.synapse.MessageContext;
 
-import javax.xml.namespace.QName;
 import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.lang.String;
 
 
 public class ifsUtil {
@@ -21,60 +22,83 @@ public class ifsUtil {
         srv.setConnectionString(IfsConnURL);
         srv.setCredentials(IfsUserID, IfsPassword);
 
+        switch(IfsVersion) {
+            case "APPS75":
+            case "APPS8":
+            case "APPS9":
+                srv.setLegacyUrl(true);
+                break;
+            case "APPS10":
+                srv.setLegacyUrl(false);
+                break;
+            default:
+                break;
+        }
         return srv;
 
         //setup PLSQL command to execute
     }
 
-    public static String getPlsqlBlock(MessageContext messageContext){
+    public static PlsqlBaseMethodType getPlsqlBaseMethodType(MessageContext messageContext){
 
-        SOAPBody soapBody = messageContext.getEnvelope().getBody();
-        String plsqlBlock = "";
-
-        for (Iterator itr = soapBody.getChildElements(); itr.hasNext();)
-        {
-            OMElement child = (OMElement)itr.next();
-            if (child.getLocalName() == constants.REQUEST) // <request> element
-            {
-                for (Iterator ItrRequest = child.getChildElements(); ItrRequest.hasNext();)
-                {
-                    OMElement child_lv1 = (OMElement)ItrRequest.next();
-                    if (child_lv1.getLocalName() == constants.PLSQLBLOCK) { // <plsqlBlock> element
-                        plsqlBlock = child_lv1.getText();
-                        System.out.println("------------------------PLSQL---------------------------------");
-                        System.out.println(plsqlBlock);
-                    }
-                }
-            }
+        String methodType_ = xmlUtil.getElementFromXmlRequest(messageContext,constants.METHODTYPE);
+        PlsqlBaseMethodType baseMethodType = PlsqlBaseMethodType.NEW;//how valid is this?
+        switch(methodType_) {
+            case "NEW":
+                baseMethodType =  PlsqlBaseMethodType.NEW;
+                break;
+            case "MODIFY":
+                baseMethodType =  PlsqlBaseMethodType.MODIFY;
+                break;
+            case "REMOVE":
+                baseMethodType =  PlsqlBaseMethodType.REMOVE;
+            break;
+            default:
+                //handle exception
         }
-        return plsqlBlock;
+        return baseMethodType;
     }
+    public static PlsqlBaseMethodAction getPlsqlBaseMethodAction(MessageContext messageContext){
+        String methodAction_ = xmlUtil.getElementFromXmlRequest(messageContext,constants.METHODACTION);
+        PlsqlBaseMethodAction baseMethodAction = PlsqlBaseMethodAction.DO;
 
-    public static HashMap getBindVariables(MessageContext messageContext){
-        SOAPBody soapBody = messageContext.getEnvelope().getBody();
-        //OMElement bindVariables = soapBody.getFirstChildWithName(new QName(constants.omNs.getNamespaceURI(), constants.BINDVARIABLES));
-
-        HashMap<String, String> bindsMap = new HashMap<>();
-
-        for (Iterator itr = soapBody.getChildElements(); itr.hasNext();)
-        {
-            OMElement child = (OMElement)itr.next();
-            if (child.getLocalName() == constants.REQUEST) // <request> element
-            {
-                for (Iterator ItrRequest = child.getChildElements(); ItrRequest.hasNext();)
-                {
-                    OMElement child_lv1 = (OMElement)ItrRequest.next();
-                    if (child_lv1.getLocalName() == constants.BINDVARIABLES) { // <bindVariables> element
-                        System.out.println("++++++++++++++++++++");
-                        for (Iterator bindsItr = child_lv1.getChildElements(); bindsItr.hasNext(); ) {
-                            OMElement bind = (OMElement) bindsItr.next();
-                            bindsMap.put(bind.getLocalName(), bind.getText());
-                            System.out.println(bind.getLocalName() + " - " + bind.getText());
-                        }
-                    }
-                }
-            }
+        switch(methodAction_) {
+            case "CHECK":
+                baseMethodAction =  PlsqlBaseMethodAction.CHECK;
+                break;
+            case "PREPARE":
+                baseMethodAction =  PlsqlBaseMethodAction.PREPARE;
+                break;
+            case "DO":
+                baseMethodAction =  PlsqlBaseMethodAction.DO;
+                break;
+            default:
+                //handle exception
         }
-        return bindsMap;
+        return baseMethodAction;
+    }
+    public static HashMap getBindVariables(MessageContext messageContext){
+        //rewrite to return cmd
+        return xmlUtil.getElementCollectionFromXmlRequest(messageContext, constants.BINDVARIABLES);
+    }
+    public static Record getRecordAttr(MessageContext messageContext){
+        //rewrite to return cmd
+        HashMap<String, String> recordAttrMap = new HashMap<>();
+        Record rec_ = new Record();
+
+        recordAttrMap =  xmlUtil.getElementCollectionFromXmlRequest(messageContext, constants.RECORD);
+
+        Set set = recordAttrMap.entrySet();
+        Iterator request_itr = set.iterator();
+
+        while(request_itr.hasNext()) {
+            Map.Entry bind = (Map.Entry)request_itr.next();
+            //temp fix to make custom field update
+            if (bind.getKey().toString().startsWith("CF_")) rec_.add(bind.getKey().toString().replace("CF_", "CF$_"), (String)bind.getValue());
+            else rec_.add((String)bind.getKey(), (String)bind.getValue());
+
+
+        }
+        return rec_;
     }
 }

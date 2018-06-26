@@ -20,9 +20,14 @@ public class constants {
     public static final String SQLSTATEMENT = "SqlStatement";
     public static final String PLSQLBLOCK = "plsqlBlock";
 
+    public static final String PLSQLPACKAGE = "plsqlPackage";
+    public static final String METHODTYPE = "methodType"; // NEW, MODIFY, REMOVE
+    public static final String METHODNAME = "methodName";
+    public static final String METHODACTION = "methodAction"; //CHECK, DO, PREPARE
+
 
     public static final String IFSCONNURL = "IfsConnURL";
-    public static final String IFSVERSION = "IfsVersion";
+    public static final String IFSVERSION = "IfsVersion"; //APPS75, APPS8, APPS9, APPS10
     public static final String IFSUSERID = "IfsUserID";
     public static final String IFSPASSWORD = "IfsPassword";
 
