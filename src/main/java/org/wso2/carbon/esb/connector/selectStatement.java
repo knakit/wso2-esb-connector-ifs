@@ -13,6 +13,11 @@ import org.wso2.carbon.esb.connector.util.resultPayloadCreate;
 
 import ifs.fnd.ap.*;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 
 public class selectStatement extends AbstractConnector {
 
@@ -26,7 +31,7 @@ public class selectStatement extends AbstractConnector {
         String IfsUserID = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSUSERID);
         String IfsPassword = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSPASSWORD);
 
-        String SqlStatement = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.SQLSTATEMENT);
+        String SqlStatement = xmlUtil.getElementFromXmlRequest(messageContext, constants.SQLSTATEMENT);
 
         try {
 
@@ -34,6 +39,16 @@ public class selectStatement extends AbstractConnector {
 
             //setup PLSQL command to execute
             PlsqlSelectCommand cmd = new PlsqlSelectCommand(srv, SqlStatement);
+
+            //add bind variables
+            HashMap bindVariables = ifsUtil.getBindVariables(messageContext);
+            Set set = bindVariables.entrySet();
+            Iterator request_itr = set.iterator();
+
+            while(request_itr.hasNext()) {
+                Map.Entry bind = (Map.Entry)request_itr.next();
+                cmd.getBindVariables().add((String)bind.getKey(), (String)bind.getValue());
+            }
 
             //start invoke
             RecordCollection result = cmd.executeQuery();

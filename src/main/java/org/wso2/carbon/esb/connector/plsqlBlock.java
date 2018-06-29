@@ -46,15 +46,20 @@ public class plsqlBlock extends AbstractConnector {
             //start invoke
             cmd.execute();
 
+            RecordCollection recCollection = new RecordCollection();
+            recCollection.add(cmd.getBindVariables());
+
+            OMElement resultOM = xmlUtil.generateResultXML(recCollection);
+
             //pack outputs of bind variables
-            Iterator response_itr = set.iterator();
-            while(response_itr.hasNext()) {
-                Map.Entry bind = (Map.Entry)response_itr.next();
-                bindVariables.put(bind.getKey(), cmd.getBindVariables().findValue((String) bind.getKey()));
-            }
+            //Iterator response_itr = set.iterator();
+            //while(response_itr.hasNext()) {
+            //    Map.Entry bind = (Map.Entry)response_itr.next();
+            //    bindVariables.put(bind.getKey(), cmd.getBindVariables().findValue((String) bind.getKey()));
+            //}
 
+            //OMElement resultOM = xmlUtil.generateResultXML(bindVariables);
 
-            OMElement resultOM = xmlUtil.generateResultXML(bindVariables);
             resultPayloadCreate.preparePayload(messageContext, resultOM);
 
         } catch (APException e) {

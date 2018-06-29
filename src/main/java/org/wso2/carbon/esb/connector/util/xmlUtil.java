@@ -3,6 +3,7 @@ package org.wso2.carbon.esb.connector.util;
 import ifs.fnd.ap.DataType;
 import ifs.fnd.ap.RecordAttributeCollection;
 import ifs.fnd.ap.RecordCollection;
+import org.apache.axiom.om.OMAttribute;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.soap.SOAPBody;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -35,28 +36,36 @@ public class xmlUtil {
 
                 for(int j = 0; j <rec.size(); j++)
                 {
-                    //attribure name
-                    String attribute_name = rec.get(j).getNameOf().replace("$", "__");
-                    //System.out.print(attribute_name + " ");
+                    //element name
+                    String element_name = rec.get(j).getNameOf().replace("$", "__");
+                    //System.out.print(element_name + " ");
 
-                    //type
+                    //data type
                     DataType data_type = rec.get(j).getDataType();
                     //System.out.print(data_type.toString() + " ");
 
                     //value
                     String value;
-                    //define element for one attribute
-                    OMElement attributeXML = constants.factory.createOMElement(attribute_name, constants.omNs);
+                    //define element for one record
+                    OMElement dataElementXML = constants.factory.createOMElement(element_name, constants.omNs);
+
+                    //define the attributes
+                    OMAttribute dataTypeAttribute = constants.factory.createOMAttribute(constants.DATATYPEATTRIBUTE, constants.omNs, data_type.toString());
 
                     if (rec.get(j).getValue().toString() != null) {
 
                         value = StringEscapeUtils.escapeXml(rec.get(j).getValue().toString());
-                        constants.factory.createOMText(attributeXML, value);
+                        constants.factory.createOMText(dataElementXML, value);
                     }
                     else{
-                        constants.factory.createOMText(attributeXML, constants.NULL);
+                        constants.factory.createOMText(dataElementXML, constants.NULL);
                     }
-                    resultXML.addChild(attributeXML);
+
+                    //pack attributes to data element
+                    dataElementXML.addAttribute(dataTypeAttribute);
+
+                    //add data element to results
+                    resultXML.addChild(dataElementXML);
 
                     //log.info(resultXML.size());
                 }
@@ -75,11 +84,11 @@ public class xmlUtil {
         while(response_itr.hasNext()) {
             Map.Entry bind = (Map.Entry)response_itr.next();
             String attribute_name = (String)bind.getKey();
-            OMElement attributeXML = constants.factory.createOMElement(attribute_name, constants.omNs);
+            OMElement recordXML = constants.factory.createOMElement(attribute_name, constants.omNs);
             String value;
             value = StringEscapeUtils.escapeXml((String)bind.getValue());
-            constants.factory.createOMText(attributeXML, value);
-            bindVariablesXML.addChild(attributeXML);
+            constants.factory.createOMText(recordXML, value);
+            bindVariablesXML.addChild(recordXML);
         }
 
         resultsXML.addChild(bindVariablesXML);
