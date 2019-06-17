@@ -321,6 +321,44 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>copy-ifs-dependencies</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>ifs.fnd</groupId>
+                                    <artifactId>ifs-java-fnd-ap</artifactId>
+                                    <version>1.0</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/connector/dependencies</outputDirectory>
+                                    <destFileName>ifs-fnd-ap.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>ifs.fnd</groupId>
+                                    <artifactId>ifs-java-fnd-base</artifactId>
+                                    <version>1.0</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/connector/dependencies</outputDirectory>
+                                    <destFileName>ifs-fnd-base.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>ifs.fnd</groupId>
+                                    <artifactId>ifs-java-fnd-common</artifactId>
+                                    <version>1.0</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/connector/dependencies</outputDirectory>
+                                    <destFileName>ifs-fnd-common.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>copy-emma-dependencies</id>
                         <phase>compile</phase>
                         <goals>

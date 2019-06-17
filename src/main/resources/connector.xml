@@ -18,7 +18,7 @@
 -->
 <connector>
     <component name="knakitifs" package="org.wso2.carbon.esb.connector" >
-        <dependency component="knakit" />
+        <dependency component="config" />
         <description>WSO2 IFS connector library by KnakIt</description>
     </component>
     <icon>icon/icon-small.gif</icon>

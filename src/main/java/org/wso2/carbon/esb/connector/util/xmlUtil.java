@@ -17,8 +17,6 @@ import java.util.Set;
 
 public class xmlUtil {
 
-
-
     public static OMElement generateResultXML(RecordCollection result)    {
 
         //define root element of XML
