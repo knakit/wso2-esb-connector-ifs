@@ -16,10 +16,19 @@
    specific language governing permissions and limitations
    under the License.
 -->
-<connector>
-    <component name="knakitifs" package="org.wso2.carbon.esb.connector" >
-        <dependency component="knakit" />
-        <description>WSO2 IFS connector library by KnakIt</description>
-    </component>
-    <icon>icon/icon-small.gif</icon>
-</connector>
+<component name="knakit" type="synapse/template" >
+    <subComponents> 
+		<component name="selectStatement" >
+	    		<file>selectStatement.xml</file>
+	    		<description>Execute SQL statement and retrives records from IFS</description>
+		</component>	
+		<component name="plsqlBlock" >
+	    		<file>plsqlBlock.xml</file>
+	    		<description>Execute PL/SQL block and retrieves the values assigned for bind variables</description>
+		</component>
+		<component name="plsqlBaseMethod" >
+	    		<file>plsqlBaseMethod.xml</file>
+	    		<description>Execute PL/SQL base method for NEW, MODIFY, REMOVE</description>
+		</component>		
+    </subComponents>    
+</component>
