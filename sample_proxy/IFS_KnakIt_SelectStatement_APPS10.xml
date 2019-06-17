@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="IFS_KnakIt_SelectStatement_APPS10"
+       transports="http https"
+       startOnLoad="true">
+   <description/>
+   <target>
+      <inSequence>
+         <knakitifs.selectStatement>
+            <IfsConnURL>https://wq-nb-dsj.totalamber.com:48080</IfsConnURL>
+            <IfsVersion>APPS10</IfsVersion>
+            <IfsUserID>ifsapp</IfsUserID>
+            <IfsPassword>ifsapp</IfsPassword>
+         </knakitifs.selectStatement>
+         <respond/>
+      </inSequence>
+   </target>
+</proxy>

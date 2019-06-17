@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="IFS_KnakIt_PlSqlBlock_APPS9"
+       transports="http https"
+       startOnLoad="true"
+       statistics="enable">
+   <description/>
+   <target>
+      <inSequence>
+         <knakitifs.plsqlBlock>
+            <IfsConnURL>http://ifsapp9race:58080</IfsConnURL>
+            <IfsVersion>APPS9</IfsVersion>
+            <IfsUserID>ifsapp</IfsUserID>
+            <IfsPassword>ifsapp</IfsPassword>
+         </knakitifs.plsqlBlock>
+         <respond/>
+      </inSequence>
+   </target>
+</proxy>
