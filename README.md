@@ -19,7 +19,8 @@ IFS-WSO2 Connector supports following IFS operations
 1.	Execute SQL statement and retrieve records from IFS
 2.	Execute PL/SQL base method for NEW, MODIFY, REMOVE
 3.	Execute PL/SQL block and retrieves the values assigned for bind variables
-To get started with * IFS-WSO2 Connector* see [Configure]( doc/config.md)
+
+To get started with **IFS-WSO2 Connector** see [Configure]( doc/config.md)
 
 
 
