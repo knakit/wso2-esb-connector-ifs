@@ -43,4 +43,4 @@ I’m pleased to know your ideas and contribution to this project.
 Easiest way is to get in touch with my mail [damithsj@gmail.com](mailto:damithsj@gmail.com)
 
 
-_IFS is a trademark of [IFSWORLD.COM]( https://www.ifsworld.com) and WSO2 is a trademark of [WSO2.COM]( https://wso2.com/). This product expects the fair use policy of the trademarks_
+>_IFS is a trademark of [IFSWORLD.COM]( https://www.ifsworld.com) and WSO2 is a trademark of [WSO2.COM]( https://wso2.com/). This product expects the fair use policy of the trademarks_
