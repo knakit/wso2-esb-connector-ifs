@@ -1,5 +1,5 @@
 # IFS-WSO2 ESB Connector
-The IFS-WSO2 Connector (project code name knakit) allows you to access Core database objects of IFS ERP, which provides a simple yet powerful web service interface that can be used to perform all possible DML operations using simple XML/JSON syntax.
+The IFS-WSO2 Connector (knakit connector) allows you to access Core database objects of IFS ERP, which provides a simple yet powerful web service interface that can be used to perform all possible DML operations using simple XML/JSON syntax.
 
 Backend of the connector was built using IFS JAVA Access Provider making fully compatibility with the IFS framework and security. It opens endless possibilities of integrating IFS with other applications and business scenarios using WSO2 products and connectors.
 
