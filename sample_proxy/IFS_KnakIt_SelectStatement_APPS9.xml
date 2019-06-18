@@ -11,10 +11,10 @@
                    scope="default"
                    type="STRING"/>
          <knakitifs.selectStatement>
-            <IfsConnURL>http://ifsapp9race:58080</IfsConnURL>
+            <IfsConnURL>IFS_URL:PORT</IfsConnURL>
             <IfsVersion>APPS9</IfsVersion>
-            <IfsUserID>ifsapp</IfsUserID>
-            <IfsPassword>ifsapp</IfsPassword>
+            <IfsUserID>USER</IfsUserID>
+            <IfsPassword>USERPW</IfsPassword>
             <SqlStatement>{$ctx:SqlStatement}</SqlStatement>
          </knakitifs.selectStatement>
          <respond/>
