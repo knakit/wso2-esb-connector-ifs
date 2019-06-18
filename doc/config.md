@@ -15,10 +15,10 @@ In this example we create a basic proxy in WSO2 to open the connector operations
 5. You need to create a Proxy services for each operation
 
 **Property description**
-- IfsConnURL : IFS Connection URL with port
-- IfsVersion : IFS version (APPS75, APPS8, APPS9, APPS10)
-- IfsUserID : IFS user ID to execute the request. This user should have FND_CONNECT permission set and corresponding permission to the database objects which are accessed.
-- IfsPassword : IFS User password 
+- `IfsConnURL` : IFS Connection URL with port
+- `IfsVersion` : IFS version (APPS75, APPS8, APPS9, APPS10)
+- `IfsUserID` : IFS user ID to execute the request. This user should have FND_CONNECT permission set and corresponding permission to the database objects which are accessed.
+- `IfsPassword` : IFS User password 
 
 
 ### Proxy-Execute SQL Statement
