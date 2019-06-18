@@ -7,10 +7,10 @@
    <target>
       <inSequence>
          <knakitifs.selectStatement>
-            <IfsConnURL>https://wq-nb-dsj.totalamber.com:48080</IfsConnURL>
+            <IfsConnURL>IFS_URL:PORT</IfsConnURL>
             <IfsVersion>APPS10</IfsVersion>
-            <IfsUserID>ifsapp</IfsUserID>
-            <IfsPassword>ifsapp</IfsPassword>
+            <IfsUserID>USER</IfsUserID>
+            <IfsPassword>USERPW</IfsPassword>
          </knakitifs.selectStatement>
          <respond/>
       </inSequence>
