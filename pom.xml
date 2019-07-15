@@ -24,8 +24,8 @@
     <artifactId>org.wso2.carbon.esb.connector.knakit.ifs</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>WSO2 - IFS Connector by Knak.it</name>
-    <url>http://wso2.org</url>
+    <name>IFS-WSO2 ESB Connector by knak.it</name>
+    <url>http://knak.it</url>
 
     <properties>
         <connector.name>knakitifs</connector.name>

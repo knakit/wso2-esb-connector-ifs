@@ -50,7 +50,7 @@ public class xmlUtil {
                     //define the attributes
                     OMAttribute dataTypeAttribute = constants.factory.createOMAttribute(constants.DATATYPEATTRIBUTE, constants.omNs, data_type.toString());
 
-                    if (rec.get(j).getValue().toString() != null) {
+                    if (rec.get(j).getValue() != null) {
 
                         value = StringEscapeUtils.escapeXml(rec.get(j).getValue().toString());
                         constants.factory.createOMText(dataElementXML, value);
