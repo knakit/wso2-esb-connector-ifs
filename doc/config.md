@@ -175,11 +175,10 @@ BEGIN
 	:DESC := IFSAPP.FND_USER_API.GET_DESCRIPTION(:IDENTITY);
 	:ORACLE_USER := IFSAPP.FND_USER_API.Get_Oracle_User(:IDENTITY);
 	:ACTIVE := IFSAPP.FND_USER_API.Get_ACTIVE(:IDENTITY);
-	:GEN_PASSWORD := IFSAPP.FND_USER_API.Create_Random_Pwd__();
-	:IDENTITY := '-';
+	:GEN_PASSWORD := IFSAPP.FND_USER_API.Create_Random_Pwd__();	
 END;
 	</plsqlBlock>
 </request>
 ```
 
->NOTE: In PLSQL Block execution, I considered all input variables as INOUT type (because of laziness of course 😊) and it gives error when using IN type parameters. As a workaround, add dummy values for IN type parameters after execution until the bug is fixed. 
+
