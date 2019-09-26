@@ -9,13 +9,16 @@ import org.apache.axiom.soap.SOAPBody;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.synapse.MessageContext;
 
-import javax.xml.namespace.QName;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 public class xmlUtil {
+    private static Log log = LogFactory.getLog(xmlUtil.class);
 
     public static OMElement generateResultXML(RecordCollection result)    {
 
@@ -111,15 +114,16 @@ public class xmlUtil {
         for (Iterator itr = soapBody.getChildElements(); itr.hasNext();)
         {
             OMElement child = (OMElement)itr.next();
-            if (child.getLocalName() == constants.REQUEST) // <request> element
+            if (child.getLocalName().equals(constants.REQUEST) ) // <request> element
             {
                 for (Iterator ItrRequest = child.getChildElements(); ItrRequest.hasNext();)
                 {
                     OMElement child_lv1 = (OMElement)ItrRequest.next();
-                    if (child_lv1.getLocalName() == ELEMENT) { // get the element
+                    if (child_lv1.getLocalName().equals(ELEMENT) ) { // get the element
                         elementValue = child_lv1.getText();
-                        System.out.println("------------------------" + ELEMENT + "---------------------------------");
-                        System.out.println(elementValue);
+                        if (log.isDebugEnabled()) {
+                            log.debug("Element: " + ELEMENT + "\n" + elementValue);
+                        }
                     }
                 }
             }
@@ -127,7 +131,7 @@ public class xmlUtil {
         return elementValue;
     }
 
-    public static HashMap getElementCollectionFromXmlRequest(MessageContext messageContext, String ELEMENT){
+    static HashMap getElementCollectionFromXmlRequest(MessageContext messageContext, String ELEMENT){
         SOAPBody soapBody = messageContext.getEnvelope().getBody();
         //OMElement bindVariables = soapBody.getFirstChildWithName(new QName(constants.omNs.getNamespaceURI(), constants.BINDVARIABLES));
 
@@ -136,17 +140,21 @@ public class xmlUtil {
         for (Iterator itr = soapBody.getChildElements(); itr.hasNext();)
         {
             OMElement child = (OMElement)itr.next();
-            if (child.getLocalName() == constants.REQUEST) // <request> element
+            if (child.getLocalName().equals(constants.REQUEST) ) // <request> element
             {
                 for (Iterator ItrRequest = child.getChildElements(); ItrRequest.hasNext();)
                 {
                     OMElement child_lv1 = (OMElement)ItrRequest.next();
-                    if (child_lv1.getLocalName() == ELEMENT) { //  element
-                        System.out.println("----------------------" + ELEMENT + "--------------------------");
+                    if (child_lv1.getLocalName().equals(ELEMENT) ) { //  element
+                        if (log.isDebugEnabled()) {
+                            log.debug("Element: " + ELEMENT );
+                        }
                         for (Iterator bindsItr = child_lv1.getChildElements(); bindsItr.hasNext(); ) {
                             OMElement bind = (OMElement) bindsItr.next();
                             bindsMap.put(bind.getLocalName(), bind.getText());
-                            System.out.println(bind.getLocalName() + " - " + bind.getText());
+                            if (log.isDebugEnabled()) {
+                                log.debug(bind.getLocalName() + " - " + bind.getText());
+                            }
                         }
                     }
                 }
