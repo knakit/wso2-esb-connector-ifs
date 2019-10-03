@@ -17,9 +17,15 @@
    under the License.
 -->
 <template name="init" onError="fault" xmlns="http://ws.apache.org/ns/synapse">
-	<parameter name="username" />
-	<parameter name="password" />
+	<parameter name="IfsConnURL" description="IFS Connection URL (APP_SERVER_URL:PORT)"/>
+	<parameter name="IfsVersion" description="IFS Version (APPS75/APPS8/APPS9/APPS10)"/>
+	<parameter name="IfsUserID" description="IFS User ID"/>
+	<parameter name="IfsPassword" description="Password"/>
 	<sequence>
-		<!-- Do the init part here-->
+		<property name="IfsConnURL" expression="$func:IfsConnURL" />
+		<property name="IfsVersion" expression="$func:IfsVersion" />
+		<property name="IfsUserID" expression="$func:IfsUserID" />
+		<property name="IfsPassword" expression="$func:IfsPassword" />
+		<class name="org.wso2.carbon.esb.connector.config"/>
 	</sequence>
 </template>

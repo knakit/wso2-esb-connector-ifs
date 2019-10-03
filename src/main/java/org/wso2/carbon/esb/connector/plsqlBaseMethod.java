@@ -16,12 +16,6 @@ public class plsqlBaseMethod extends AbstractConnector {
     @Override
     public void connect(MessageContext messageContext) throws ConnectException {
 
-        //IFS connection details
-        String IfsConnURL = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSCONNURL);
-        String IfsVersion = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSVERSION);
-        String IfsUserID = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSUSERID);
-        String IfsPassword = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSPASSWORD);
-
         String plsqlPackage = xmlUtil.getElementFromXmlRequest(messageContext, constants.PLSQLPACKAGE);
         PlsqlBaseMethodType methodType = ifsUtil.getPlsqlBaseMethodType(messageContext);
         String methodName = xmlUtil.getElementFromXmlRequest(messageContext,constants.METHODNAME);
@@ -32,7 +26,7 @@ public class plsqlBaseMethod extends AbstractConnector {
         Record recordAttr = ifsUtil.getRecordAttr(messageContext);
 
         try {
-            Server srv = ifsUtil.connect(IfsConnURL, IfsVersion, IfsUserID, IfsPassword);
+            Server srv = ifsUtil.connect(messageContext);
             PlsqlBaseMethodCommand cmd = new PlsqlBaseMethodCommand(srv, methodType, plsqlPackage, methodName, recordAttr, methodAction);
             cmd.execute();
 
@@ -43,7 +37,7 @@ public class plsqlBaseMethod extends AbstractConnector {
             resultPayloadCreate.preparePayload(messageContext, resultOM);
 
         } catch (APException e) {
-            log.error("error while executing PL/SQL Base Method in " + IfsConnURL + " Error:" + e.getMessage());
+            log.error("error while executing PL/SQL Base Method. Error:" + e.getMessage());
             handleException(e.getMessage(), e, messageContext);
         }
 

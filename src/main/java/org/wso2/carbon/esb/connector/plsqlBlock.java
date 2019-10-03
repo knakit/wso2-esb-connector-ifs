@@ -21,16 +21,10 @@ public class plsqlBlock extends AbstractConnector {
     @Override
     public void connect(MessageContext messageContext) throws ConnectException {
 
-        //IFS connection details
-        String IfsConnURL = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSCONNURL);
-        String IfsVersion = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSVERSION);
-        String IfsUserID = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSUSERID);
-        String IfsPassword = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSPASSWORD);
-
         String plsqlBlock = xmlUtil.getElementFromXmlRequest(messageContext, constants.PLSQLBLOCK);
 
         try {
-            Server srv = ifsUtil.connect(IfsConnURL, IfsVersion, IfsUserID, IfsPassword);
+            Server srv = ifsUtil.connect(messageContext);
             PlsqlCommand cmd = new PlsqlCommand(srv, plsqlBlock);
 
             //add bind variables
@@ -63,7 +57,7 @@ public class plsqlBlock extends AbstractConnector {
             resultPayloadCreate.preparePayload(messageContext, resultOM);
 
         } catch (APException e) {
-            log.error("error while executing PL/SQL block in " + IfsConnURL + " Error:" + e.getMessage());
+            log.error("error while executing PL/SQL block. Error:" + e.getMessage());
             handleException(e.getMessage(), e, messageContext);
         }
 

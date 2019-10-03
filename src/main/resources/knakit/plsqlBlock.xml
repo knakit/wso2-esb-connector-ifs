@@ -16,17 +16,7 @@
    under the License.
 -->
 <template xmlns="http://ws.apache.org/ns/synapse" name="plsqlBlock">
-		<parameter name="IfsConnURL" description="IFS Connection URL"/>
-		<parameter name="IfsVersion" description="IFS Version (APPS75/APPS8/APPS9/APPS10)"/>
-		<parameter name="IfsUserID" description="IFS User ID"/>
-		<parameter name="IfsPassword" description="Password"/>
-        <sequence>
-            <log level="full">			
-				<property name="IfsConnURL" expression="$func:IfsConnURL" />
-				<property name="IfsVersion" expression="$func:IfsVersion" />
-				<property name="IfsUserID" expression="$func:IfsUserID" />
-				<property name="IfsPassword" expression="$func:IfsPassword" />
-		</log>
+	<sequence>
 		<class name="org.wso2.carbon.esb.connector.plsqlBlock" />
-        </sequence>
+	</sequence>
 </template>

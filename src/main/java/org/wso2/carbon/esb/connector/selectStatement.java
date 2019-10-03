@@ -24,18 +24,12 @@ public class selectStatement extends AbstractConnector {
     @Override
     public void connect(MessageContext messageContext) throws ConnectException {
 
-        //IFS connection details
-
-        String IfsConnURL = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSCONNURL);
-        String IfsVersion = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSVERSION);
-        String IfsUserID = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSUSERID);
-        String IfsPassword = (String)ConnectorUtils.lookupTemplateParamater(messageContext, constants.IFSPASSWORD);
 
         String SqlStatement = xmlUtil.getElementFromXmlRequest(messageContext, constants.SQLSTATEMENT);
 
         try {
 
-            Server srv = ifsUtil.connect(IfsConnURL, IfsVersion, IfsUserID, IfsPassword);
+            Server srv = ifsUtil.connect(messageContext);
 
             //setup PLSQL command to execute
             PlsqlSelectCommand cmd = new PlsqlSelectCommand(srv, SqlStatement);
@@ -58,7 +52,7 @@ public class selectStatement extends AbstractConnector {
                 resultPayloadCreate.preparePayload(messageContext, resultOM);
             }
         } catch (APException e) {
-            log.error("error while executing select statement in " + IfsConnURL + " Error:" + e.getMessage());
+            log.error("error while executing select statement. Error:" + e.getMessage());
             handleException(e.getMessage(), e, messageContext);
         }
 

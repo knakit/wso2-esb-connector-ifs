@@ -15,8 +15,15 @@ import java.lang.String;
 
 public class ifsUtil {
 
-    public static Server connect(String IfsConnURL, String IfsVersion, String IfsUserID, String IfsPassword){
+    public static Server connect(MessageContext messageContext){
         // Create a server and invoke server
+
+        //IFS connection details
+        String IfsConnURL = (String) messageContext.getProperty(constants.IFSCONNURL);
+        String IfsVersion = (String) messageContext.getProperty(constants.IFSVERSION);
+        String IfsUserID = (String) messageContext.getProperty(constants.IFSUSERID);
+        String IfsPassword = (String) messageContext.getProperty(constants.IFSPASSWORD);
+
         Server srv = new Server();
 
         srv.setConnectionString(IfsConnURL);

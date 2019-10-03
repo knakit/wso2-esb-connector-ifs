@@ -20,7 +20,7 @@
     <subComponents> 
 		<component name="init" >
 	    		<file>init.xml</file>
-	    		<description>Init operation</description>
+	    		<description>IFS Connector Settings</description>
 		</component>
     </subComponents>    
 </component>

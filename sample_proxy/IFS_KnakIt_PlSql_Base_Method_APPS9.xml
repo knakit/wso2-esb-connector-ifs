@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="IFS_KnakIt_PlSql_Base_Method_APPS9"
-       transports="http https"
-       startOnLoad="true"
-       statistics="enable">
-   <description/>
+<proxy name="Apps9_PLSQL_Base" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
    <target>
       <inSequence>
-         <knakitifs.plsqlBaseMethod>
-            <IfsConnURL>IFS_URL:POR</IfsConnURL>
+         <log description="request" level="full"/>
+         <knakitifs.init>
+            <IfsConnURL>IFS_URL:PORT</IfsConnURL>
             <IfsVersion>APPS9</IfsVersion>
-            <IfsUserID>USER</IfsUserID>
-            <IfsPassword>USERPW</IfsPassword>
-         </knakitifs.plsqlBaseMethod>
-         <respond/>
+            <IfsUserID>IFS_USER</IfsUserID>
+            <IfsPassword>IFS_USER_PW</IfsPassword>
+         </knakitifs.init>
+         <knakitifs.plsqlBaseMethod/>
+         <log description="response" level="full"/>
+         <respond description="Response"/>
       </inSequence>
+      <outSequence/>
+      <faultSequence/>
    </target>
 </proxy>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="IFS_KnakIt_PlSqlBlock_APPS10"
-       transports="http https"
-       startOnLoad="true"
-       statistics="enable">
-   <description/>
+<proxy name="Apps10_PLSQL_Block" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
    <target>
       <inSequence>
-         <knakitifs.plsqlBlock>
-            <IfsConnURL>https://IFS_URL:PORT</IfsConnURL>
+         <log description="request" level="full"/>
+         <knakitifs.init>
+            <IfsConnURL>IFS_URL:PORT</IfsConnURL>
             <IfsVersion>APPS10</IfsVersion>
-            <IfsUserID>USER</IfsUserID>
-            <IfsPassword>USERPW</IfsPassword>
-         </knakitifs.plsqlBlock>
-         <respond/>
+            <IfsUserID>IFS_USER</IfsUserID>
+            <IfsPassword>IFS_USER_PW</IfsPassword>
+         </knakitifs.init>
+         <knakitifs.plsqlBlock/>
+         <log description="response" level="full"/>
+         <respond description="Response"/>
       </inSequence>
+      <outSequence/>
+      <faultSequence/>
    </target>
 </proxy>
