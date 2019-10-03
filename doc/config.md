@@ -25,22 +25,22 @@ In this example we create a basic proxy in WSO2 to open the connector operations
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="IFS_KnakIt_SQL_APPS10"
-       transports="http https"
-       startOnLoad="true"
-       statistics="enable">
-   <description/>
+<proxy name="Apps10_SQL" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
    <target>
       <inSequence>
-         <knakitifs.selectStatement>
-            <IfsConnURL>https://IFS_URL:PORT</IfsConnURL>
+         <log description="request" level="full"/>
+         <knakitifs.init>
+            <IfsConnURL>IFS_URL:PORT</IfsConnURL>
             <IfsVersion>APPS10</IfsVersion>
-            <IfsUserID>userID</IfsUserID>
-            <IfsPassword>password</IfsPassword>
-         </knakitifs.selectStatement>
-         <respond/>
+            <IfsUserID>IFS_USER</IfsUserID>
+            <IfsPassword>IFS_USER_PW</IfsPassword>
+         </knakitifs.init>
+         <knakitifs.selectStatement/>
+         <log description="response" level="full"/>
+         <respond description="Response"/>
       </inSequence>
+      <outSequence/>
+      <faultSequence/>
    </target>
 </proxy>
 
@@ -52,46 +52,47 @@ In this example we create a basic proxy in WSO2 to open the connector operations
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="IFS_KnakIt_PlSqlBlock_APPS10"
-       transports="http https"
-       startOnLoad="true"
-       statistics="enable">
-   <description/>
+<proxy name="Apps10_PLSQL_Block" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
    <target>
       <inSequence>
-         <knakitifs.plsqlBlock>
-            <IfsConnURL>https://IFS_URL:PORT</IfsConnURL>
+         <log description="request" level="full"/>
+         <knakitifs.init>
+            <IfsConnURL>IFS_URL:PORT</IfsConnURL>
             <IfsVersion>APPS10</IfsVersion>
-            <IfsUserID>userID</IfsUserID>
-            <IfsPassword>password</IfsPassword>
-         </knakitifs.plsqlBlock>
-         <respond/>
+            <IfsUserID>IFS_USER</IfsUserID>
+            <IfsPassword>IFS_USER_PW</IfsPassword>
+         </knakitifs.init>
+         <knakitifs.plsqlBlock/>
+         <log description="response" level="full"/>
+         <respond description="Response"/>
       </inSequence>
+      <outSequence/>
+      <faultSequence/>
    </target>
 </proxy>
+
 ```
 
 ### Proxy-Execute PL/SQL base method for NEW, MODIFY, REMOVE
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="IFS_KnakIt_PlSqlBase_APPS10"
-       transports="http https"
-       startOnLoad="true"
-       statistics="enable">
-   <description/>
+<proxy name="Apps10_PLSQL_Base" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
    <target>
       <inSequence>
-         <knakitifs.plsqlBaseMethod>
-            <IfsConnURL>https://IFS_URL:PORT</IfsConnURL>
+         <log description="request" level="full"/>
+         <knakitifs.init>
+            <IfsConnURL>IFS_URL:PORT</IfsConnURL>
             <IfsVersion>APPS10</IfsVersion>
-            <IfsUserID>userID</IfsUserID>
-            <IfsPassword>password</IfsPassword>
-         </knakitifs.plsqlBaseMethod>
-         <respond/>
+            <IfsUserID>IFS_USER</IfsUserID>
+            <IfsPassword>IFS_USER_PW</IfsPassword>
+         </knakitifs.init>
+         <knakitifs.plsqlBaseMethod/>
+         <log description="response" level="full"/>
+         <respond description="Response"/>
       </inSequence>
+      <outSequence/>
+      <faultSequence/>
    </target>
 </proxy>
 ```
