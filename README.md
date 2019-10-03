@@ -8,7 +8,7 @@ IFS-WSO2 Connector is tested with IFS versions APP8, APP9, APP10 and with WSO2 E
 
 ## Download and install the connector
 If you are new to [WSO2 ]( https://wso2.com/)and haven’t install it before, first download and install [WSO2 EI]( https://wso2.com/integration/)
-1. Download the connector from [build](build/knakitifs-connector-1.0.0.zip)
+1. Download the latest [release](https://github.com/knakit/wso2-esb-connector-ifs/releases) of the connector.
 2. Open the Management Console of WSO2 EI
 3. On the **Connectors** node, click **Add** to open the Add Connector page
 4. Click **Choose File**, select the required connector ZIP file, and click **Upload**.  The connector should now appear in the Connectors list and is by default disabled.
