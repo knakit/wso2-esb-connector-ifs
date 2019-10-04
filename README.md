@@ -1,7 +1,7 @@
 # IFS-WSO2 ESB Connector
-The IFS-WSO2 Connector (knakit connector) allows you to access Core database objects of IFS ERP, which provides a simple yet powerful web service interface that can be used to perform all possible DML operations using simple XML/JSON syntax.
+The IFS-WSO2 Connector allows you to access Core database objects of IFS ERP from WSO2 Enterprise Integrator.
 
-Backend of the connector was built using IFS JAVA Access Provider making fully compatibility with the IFS framework and security. It opens endless possibilities of integrating IFS with other applications and business scenarios using WSO2 products and connectors.
+Connector was built using IFS JAVA Access Provider which utilizes an fully compatibility with the IFS framework and security. It opens endless possibilities of integrating IFS with other applications and business scenarios using WSO2 products and other connectors.
 
 ## Compatibility
 IFS-WSO2 Connector is tested with IFS versions APP8, APP9, APP10 and with WSO2 EI 6.X.X
@@ -40,7 +40,7 @@ Follow the steps given below to build the **IFS-WSO2 Connector** from the source
 ## How you can contribute
 **IFS-WSO2 Connector** is a result of my curiosity to test the possibilities of integrating IFS with other systems and having some fun with java coding. It’s not a final product so don’t expect much from it but executing an SQL or PL/SQL code from a web service provide enough potential to develop complex integrations.
 I’m pleased to know your ideas and contribution to this project.
-Easiest way is to get in touch with my mail [damithsj@gmail.com](mailto:damithsj@gmail.com)
+Easiest way is to get in touch with our mail [knakit.dev@gmail.com](mailto:knakit.dev@gmail.com)
 
 
 >_IFS is a trademark of [IFSWORLD.COM]( https://www.ifsworld.com) and WSO2 is a trademark of [WSO2.COM]( https://wso2.com/). This product expects the fair use policy of the trademarks_
