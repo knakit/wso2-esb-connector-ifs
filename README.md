@@ -1,4 +1,4 @@
-[![Support me on BMC](https://img.shields.io/badge/Support%20me-☕-orange.svg?style=for-the-badge)](https://www.buymeacoffee.com/dsj23)
+[![Support me on BMC](https://img.shields.io/badge/Support%20me-☕-orange.svg?style=for-the-badge)](https://www.buymeacoffee.com/dsj23)  [![Licence](https://img.shields.io/github/license/knakit/wso2-esb-connector-ifs?style=for-the-badge)](https://github.com/knakit/wso2-esb-connector-ifs/blob/master/LICENSE)
 # IFS-WSO2 ESB Connector
 The IFS-WSO2 Connector allows you to access Core database objects of IFS ERP from WSO2 Enterprise Integrator.
 
