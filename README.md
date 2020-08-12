@@ -3,7 +3,10 @@
 The IFS-WSO2 Connector allows you to access Core database objects of IFS ERP from WSO2 Enterprise Integrator.
 
 Connector was built using IFS JAVA Access Provider which utilizes an fully compatibility with the IFS framework and security. It opens endless possibilities of integrating IFS with other applications and business scenarios using WSO2 products and other connectors.
-![IFS WSO2 connector](./doc/images/ifs_wso2.png)
+<br>
+| ![IFS WSO2 connector](./doc/images/ifs_wso2.png) | 
+|:--:| 
+| *IFS WSO2 Connctor overview* |
 
 ## Compatibility
 IFS-WSO2 Connector is tested with IFS versions APP8, APP9, APP10 and with WSO2 EI 6.X.X
