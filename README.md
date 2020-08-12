@@ -6,10 +6,10 @@ Connector was built using IFS JAVA Access Provider which utilizes an fully compa
 <br>
 | ![IFS WSO2 connector](./doc/images/ifs_wso2.png) | 
 |:--:| 
-| *IFS WSO2 Connctor overview* |
+| *IFS WSO2 Connector overview* |
 
 ## Compatibility
-IFS-WSO2 Connector is tested with IFS versions APP8, APP9, APP10 and with WSO2 EI 6.X.X
+IFS-WSO2 Connector is tested with IFS versions APP8, APP9, APP10 and with WSO2 EI 6.X.X, WSO2 MI 1.X.X
 
 ## Download and install the connector
 If you are new to [WSO2 ]( https://wso2.com/)and haven’t install it before, first download and install [WSO2 EI]( https://wso2.com/integration/)
