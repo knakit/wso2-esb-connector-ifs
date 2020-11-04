@@ -35,7 +35,7 @@
         <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
         <automation.framework.version>4.4.3</automation.framework.version>
         <emma.version>2.1.5320</emma.version>
-        <synapse.version>2.1.7-wso2v19</synapse.version>
+        <synapse.version>3.0.1</synapse.version>
         <carbon.mediation.version>4.6.19</carbon.mediation.version>
         <json.version>2.0.0.wso2v1</json.version>
         <org.testng.version>6.1.1</org.testng.version>
