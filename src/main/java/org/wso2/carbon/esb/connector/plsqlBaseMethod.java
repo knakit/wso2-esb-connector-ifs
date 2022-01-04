@@ -3,6 +3,7 @@ package org.wso2.carbon.esb.connector;
 import ifs.fnd.ap.*;
 import org.apache.axiom.om.OMElement;
 import org.apache.synapse.MessageContext;
+import org.apache.synapse.SynapseException;
 import org.wso2.carbon.connector.core.AbstractConnector;
 import org.wso2.carbon.connector.core.ConnectException;
 import org.wso2.carbon.connector.core.util.ConnectorUtils;
@@ -37,8 +38,10 @@ public class plsqlBaseMethod extends AbstractConnector {
             resultPayloadCreate.preparePayload(messageContext, resultOM);
 
         } catch (APException e) {
-            log.error("error while executing PL/SQL Base Method. Error:" + e.getMessage());
-            handleException(e.getMessage(), e, messageContext);
+            //log.error("error while executing PL/SQL Base Method. Error:" + e.getMessage());
+            //throw new SynapseException("error while executing PL/SQL Base Method", e);
+            OMElement errorOM = xmlUtil.generateErrorXML("APException", e.getMessage());
+            resultPayloadCreate.preparePayload(messageContext, errorOM);
         }
 
 

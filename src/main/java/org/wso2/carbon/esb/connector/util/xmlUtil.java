@@ -95,6 +95,17 @@ public class xmlUtil {
         resultsXML.addChild(bindVariablesXML);
         return resultsXML;
     }
+    public static OMElement generateErrorXML(String exceptionType, String errorMessage)    {
+        OMElement resultsXML = constants.factory.createOMElement(constants.ERROR,constants.omNs);
+        OMElement errorTypeXML = constants.factory.createOMElement(constants.ERRORTYPE,constants.omNs);
+        OMElement errorDetailXML = constants.factory.createOMElement(constants.ERRORDETAIL,constants.omNs);
+
+        constants.factory.createOMText(errorTypeXML, exceptionType);
+        constants.factory.createOMText(errorDetailXML, errorMessage);
+        resultsXML.addChild(errorTypeXML);
+        resultsXML.addChild(errorDetailXML);
+        return resultsXML;
+    }
     public static OMElement generateExecuteSuccessXML(){
         //define root element of XML
         OMElement resultsXML = constants.factory.createOMElement(constants.RESPONSE,constants.omNs);

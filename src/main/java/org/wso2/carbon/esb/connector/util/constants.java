@@ -13,6 +13,9 @@ public class constants {
     //XML element definitions
     public static final String REQUEST = "request";
     public static final String RESPONSE = "response";
+    public static final String ERROR = "error";
+    public static final String ERRORTYPE = "errorType";
+    public static final String ERRORDETAIL = "errorDetail";
     public static final String RESULT = "result";
     public static final String RESULTSET = "resultSet";
     public static final String RECORD = "record";

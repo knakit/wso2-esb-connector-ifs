@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Knak.it" />
         <module name="wso2-esb-connector-ifs" />
         <module name="org.wso2.carbon.esb.connector.knakit.ifs" />
-        <module name="Knak.it" />
       </profile>
     </annotationProcessing>
   </component>
